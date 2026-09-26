@@ -1,15 +1,19 @@
-# استخدام صورة Python رسمية ومستقرة
-FROM python:3.12-slim-bookworm
+FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 
-# تثبيت uv من الموقع الرسمي
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# إضافة مسار uv إلى PATH
-ENV PATH="/root/.local/bin:$PATH"
+# إنشاء مستخدم vscode بمعرّف ثابت 1000 لتجنب مشاكل الصلاحيات
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends passwd sudo \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd -m -s /bin/bash -u 1000 vscode \
+    && echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # إعدادات uv
 ENV UV_LINK_MODE=copy \
     UV_COMPILE_BYTECODE=1 \
     UV_PROJECT_ENVIRONMENT=/workspaces/.venv
 
+# إنشاء مجلد العمل وتمليكه للمستخدم vscode
 WORKDIR /workspaces
+RUN chown vscode:vscode /workspaces
+
+USER vscode
