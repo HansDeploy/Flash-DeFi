@@ -38,3 +38,4 @@ if __name__ == "__main__":
     except ValueError as exc:
         print(f"❌ {exc}")
         raise SystemExit(1)
+

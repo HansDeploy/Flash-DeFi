@@ -12,6 +12,7 @@ This project uses environment variables for both the Flash API and the Gemini AP
 2. Add your real keys to `.env`:
    ```env
    FLASH_API_KEY=your_flash_api_key_here
+   LIFI_API_KEY=your_lifi_api_key_here
    GEMINI_API_KEY=your_gemini_api_key_here
    GEMINI_MODEL=gemini-3.8-flash
    ```
