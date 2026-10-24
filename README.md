@@ -1,44 +1,25 @@
-# Flash-DeFi
-Intent-based DeFi assistant for Sharia-compliant yield discovery.
+# Sharia compliant DeFi Explorer
 
-## Setup
+An AI-powered web app to discover verified Sharia-compliant DeFi yield opportunities. Built with Python, Streamlit, and Google Gemini.
 
-This project uses environment variables for both the Flash API and the Gemini API.
+🔗 **[Launch Live App](https://hansdeploy-defi.streamlit.app/)** 
 
-1. Copy the example environment file:
-   ```bash
-   cp .env.example .env
-   ```
-2. Add your real keys to `.env`:
-   ```env
-   FLASH_API_KEY=your_flash_api_key_here
-   LIFI_API_KEY=your_lifi_api_key_here
-   GEMINI_API_KEY=your_gemini_api_key_here
-   GEMINI_MODEL=gemini-3.8-flash
-   ```
+## Features
+- **Sleek UI:**Dark theme.
+- **AI Analysis:** Explains *why* a protocol is halal and highlights risks using Gemini.
+- **Verified Protocols:** Focuses strictly on Nawa Finance, Goldsand, and MRHB Network.
+- **No Affiliates:** Clean redirects directly to official protocol websites.
 
-## Install dependencies
+## Tech Stack
+Python, Streamlit, Google GenAI SDK, Custom CSS.
 
-```bash
-uv sync --extra dev
-```
+## Run Locally
+1. `pip install -r requirements.txt`
+2. Add `GEMINI_API_KEY="your_key"` to a `.env` file.
+3. `streamlit run app.py`
 
-## Run the scripts
+## Disclaimer
+For informational purposes only. Not financial advice or a Fatwa. Always do your own research (DYOR).
 
-### Flash quote fetcher
-
-```bash
-uv run python src/data_fetcher.py
-```
-
-### Gemini smoke test
-
-```bash
-uv run python src/test_gemini.py
-```
-
-## Notes
-
-- The app expects the environment file to live in the project root as `.env`.
-- `src/data_fetcher.py` validates that `FLASH_API_KEY` is present before making a request.
-- The Gemini script uses the current `google-genai` package and a supported model name.
+---
+*Built by [HansDeploy](https://github.com/HansDeploy)*
