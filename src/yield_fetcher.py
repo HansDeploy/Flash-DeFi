@@ -94,7 +94,6 @@ def _parse_vault(vault: dict[str, Any]) -> dict[str, Any]:
             vault.get("protocolName"),
             _nested_value(protocol, "name"),
             protocol if isinstance(protocol, str) else None,
-            vault.get("name"),
         )
         or "Unknown"
     )
@@ -133,32 +132,36 @@ def _parse_vault(vault: dict[str, Any]) -> dict[str, Any]:
 
 def run_yield_analysis() -> None:
     """Fetch yields, filter halal protocols, and print results and advice."""
-    print("🔍 جاري جلب البيانات من LI.FI...")
+    print("🔍 Fetching data from LI.FI...")
     raw_vaults = get_yields()
 
     halal_vaults = []
 
-    # 1. الفلترة
+    # 1. Filter protocols
     for vault in raw_vaults:
         parsed = _parse_vault(vault)
         if is_halal(parsed["protocol"]):
             halal_vaults.append(parsed)
 
     print(
-        f"✅ تم العثور على {len(halal_vaults)} بروتوكول حلال من أصل {len(raw_vaults)}.\n"
+        f"✅ Found {len(halal_vaults)} Sharia-compliant protocols "
+        f"out of {len(raw_vaults)} total.\n"
     )
 
-    # 2. عرض النتائج وسؤال Gemini
+    # 2. Display results and ask Gemini
     if halal_vaults:
         for v in halal_vaults:
             print(f"- {v['protocol']} | APY: {v['apy']} | Network: {v['network']}")
 
-        print("\n🤖 جاري سؤال الذكاء الاصطناعي (Gemini) عن رأيه الشرعي...")
+        print("\n🤖 Asking Gemini for Sharia guidance...")
         advice = ask_gemini_about_halal_yields(halal_vaults)
-        print("\n--- نصيحة المستشار ---")
+        print("\n--- Advisor guidance ---")
         print(advice)
     else:
-        print("❌ لم يتم العثور على بروتوكولات حلال في أعلى القائمة حالياً.")
+        print(
+            "No Sharia-compliant yields found from our partner protocols "
+            "at this moment."
+        )
 
 
 if __name__ == "__main__":
